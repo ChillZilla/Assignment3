@@ -1,4 +1,6 @@
 package Assignment3;
+import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 
 public class Grocery extends Item {
 	//variables, constructor here
@@ -24,4 +26,11 @@ public class Grocery extends Item {
 		return (this.price * this.weight * 20 * 100.00)/100.00; //normal standard shipping
 	}
 	
+	void printItemAttributes () 
+	{
+		//Print all applicable attributes of this sub-class
+		JFrame frame = new JFrame("Shopping Cart");
+		JOptionPane.showMessageDialog(frame, this.name + " attributes", "Name: " + this.name + "Price: "+this.price + "Quantity: "
+		+ this.quantity + "Weight: "+ this.weight + "Perishable? " + this.optional1, JOptionPane.INFORMATION_MESSAGE);
+	}
 }
