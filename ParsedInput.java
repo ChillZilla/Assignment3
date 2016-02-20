@@ -4,13 +4,13 @@ public class ParsedInput {
 	String command;
 	String category;
 	String name;
-	int price;
-	int quantity;
+	double price;
+	double quantity;
 	int weight;
 	String optional1;
 	String optional2;
 	
-	ParsedInput(String operation, String cat, String item, String cost, int value, int amount, int mass, String op1, String op2)
+	ParsedInput(String operation, String cat, String item, double value, double amount, int mass, String op1, String op2)
 	{
 		command = operation;
 		category = cat;
