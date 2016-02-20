@@ -5,12 +5,12 @@ public class ParsedInput {
 	String category;
 	String name;
 	double price;
-	double quantity;
-	int weight;
+	int quantity;
+	double weight;
 	String optional1;
 	String optional2;
 	
-	ParsedInput(String operation, String cat, String item, double value, double amount, int mass, String op1, String op2)
+	ParsedInput(String operation, String cat, String item, double value, int amount, double mass, String op1, String op2)
 	{
 		command = operation;
 		category = cat;
@@ -24,7 +24,8 @@ public class ParsedInput {
 	ParsedInput()
 	{
 		command = category = name = "";
-		price = quantity = weight = 0;
+		price = quantity = 0;
+		weight = 0.0;
 		optional1 = optional2 = "";
 	}
 	
