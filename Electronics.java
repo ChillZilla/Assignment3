@@ -1,4 +1,6 @@
 package Assignment3;
+import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 
 public class Electronics extends Item 
 {
@@ -46,5 +48,12 @@ public class Electronics extends Item
 	}
 	//fragile requires premium shipping
 	//certain states have no sales tax
-
+	
+	void printItemAttributes () 
+	{
+		//Print all applicable attributes of this sub-class
+		JFrame frame = new JFrame("Shopping Cart");
+		JOptionPane.showMessageDialog(frame,  this.name + " attributes",  "Name: " + this.name + "Price: "+this.price + "Quantity: "
+		+ this.quantity + "Weight: "+ this.weight + "Fragile? " + this.optional1 + "State: " + this.optional2,  JOptionPane.INFORMATION_MESSAGE);
+	}
 }
