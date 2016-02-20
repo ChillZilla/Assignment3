@@ -82,10 +82,10 @@ public class A3Driver
 	  public static ArrayList<Item> createCart(ArrayList<Item> cart, String input)
 	  {
 		  ArrayList<Item> dummylist = new ArrayList<Item>();
-<<<<<<< HEAD
+
 		  parseInput(input);
 		  
-=======
+
 		  ParsedInput parsedInput = parseInput(input);
 		  
 		  if (parsedInput.command.equalsIgnoreCase("Insert")){
@@ -105,7 +105,7 @@ public class A3Driver
 		  else if (parsedInput.command.equalsIgnoreCase("Print")){
 			  
 		  }
->>>>>>> 9f5547588c54a14d9d3c29bc4ed3abd0a4dd5739
+
 		  
 		  return dummylist;
 	  }

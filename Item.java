@@ -4,14 +4,14 @@ public class Item
 {
 //Declare variables for this class. Think about its type: public, protected or private?
 	String name;
-	int price;
+	double price;
 	int quantity;
-	int weight;
+	double weight;
 	String optional1;
 	String optional2;
 
 // You will need a constructor (Why?). Create it here.
-	Item(String item, String cost, int value, int amount, int mass, String op1, String op2){
+	Item(String item, String cost, double value, int amount, double mass, String op1, String op2){
 		name = item;
 		price = value;
 		quantity = amount;
@@ -29,9 +29,9 @@ public class Item
 		optional2 = "";
 	}
 	
-	float calculatePrice () 
+	double calculatePrice () 
 	{
-		float final_price = 0;
+		double final_price = 0;
 		// Insert price calculation here
 		return final_price;
 	}
