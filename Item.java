@@ -1,4 +1,6 @@
 package Assignment3;
+import javax.swing.JOptionPane;
+import javax.swing.JFrame;
 
 public class Item 
 {
