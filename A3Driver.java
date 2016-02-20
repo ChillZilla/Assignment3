@@ -76,15 +76,36 @@ public class A3Driver
 				e.printStackTrace();
 				System.exit(-1);
 			}
-		}  
-	  
+		}
 	  
 	  
 	  public static ArrayList<Item> createCart(ArrayList<Item> cart, String input)
 	  {
 		  ArrayList<Item> dummylist = new ArrayList<Item>();
+<<<<<<< HEAD
 		  parseInput(input);
 		  
+=======
+		  ParsedInput parsedInput = parseInput(input);
+		  
+		  if (parsedInput.command.equalsIgnoreCase("Insert")){
+			  
+		  }
+		  else if (parsedInput.command.equalsIgnoreCase("Search")){
+			  int i = 0;
+			  int itemFound = 0;
+			  dummylist.size();
+		  }
+		  else if (parsedInput.command.equalsIgnoreCase("Delete")){
+			  
+		  }
+		  else if (parsedInput.command.equalsIgnoreCase("Update")){
+			  
+		  }
+		  else if (parsedInput.command.equalsIgnoreCase("Print")){
+			  
+		  }
+>>>>>>> 9f5547588c54a14d9d3c29bc4ed3abd0a4dd5739
 		  
 		  return dummylist;
 	  }
