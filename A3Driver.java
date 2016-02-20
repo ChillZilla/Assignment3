@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.regex.Pattern;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
 public class A3Driver
 	{
 
@@ -87,20 +90,37 @@ public class A3Driver
 		  
 
 		  ParsedInput parsedInput = parseInput(input);
+		  JFrame frame = new JFrame("Shopping Center");
 		  
 		  if (parsedInput.command.equalsIgnoreCase("Insert")){
 			  
 		  }
 		  else if (parsedInput.command.equalsIgnoreCase("Search")){
-			  int i = 0;
 			  int itemFound = 0;
-			  dummylist.size();
+			  for (int i = 0; i < dummylist.size(); i++){
+				  if (dummylist.get(i).name.equalsIgnoreCase(parsedInput.name)){
+					  itemFound++;
+				  }
+			  }
+			  JOptionPane.showMessageDialog(frame, "There are a total of " + itemFound + " " + parsedInput.name + " in your cart.");
 		  }
 		  else if (parsedInput.command.equalsIgnoreCase("Delete")){
-			  
+			  for (int i = 0; i < dummylist.size(); i++) {
+				  if (dummylist.get(i).name.equalsIgnoreCase(parsedInput.name)){
+					  dummylist.remove(i);
+				  }
+			  }
 		  }
 		  else if (parsedInput.command.equalsIgnoreCase("Update")){
-			  
+			  int itemFound = 0;
+			  int i = 0;
+			  while(i < dummylist.size() && itemFound == 0){
+				  if (dummylist.get(i).name.equalsIgnoreCase(parsedInput.name)){
+					  dummylist.get(i).quantity = parsedInput.quantity;
+					  itemFound = 1;
+				  }
+				  i++;
+			  }
 		  }
 		  else if (parsedInput.command.equalsIgnoreCase("Print")){
 			  
