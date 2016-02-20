@@ -164,7 +164,7 @@ public class A3Driver
 				
 				
 				 if(splitArg[6].equalsIgnoreCase("p") || splitArg[6].equalsIgnoreCase("np")){
-					 ParsedInput insertInput = new ParsedInput("insert", "Groceries", splitArg[2], money, weight, quantity, splitArg[5], "");
+					 ParsedInput insertInput = new ParsedInput("insert", "Groceries", splitArg[2], money, quantity, weight, splitArg[5], "");
 						return insertInput;
 				 }
 				 else {return inputLine;}
@@ -190,7 +190,7 @@ public class A3Driver
 				 int quantity = Integer.parseInt(splitArg[4]);
 				 
 				
-				 ParsedInput insertInput = new ParsedInput("insert", "Clothing", splitArg[2], money, weight, quantity, "", "");
+				 ParsedInput insertInput = new ParsedInput("insert", "Clothing", splitArg[2], money, quantity, weight, "", "");
 				 return insertInput;
 				 
 			 }
@@ -217,7 +217,7 @@ public class A3Driver
 				 int quantity = Integer.parseInt(splitArg[4]);
 			
 				 if(splitArg[6].equalsIgnoreCase("f") || splitArg[6].equalsIgnoreCase("nf")){
-					 ParsedInput insertInput = new ParsedInput("insert", "Electronics", splitArg[2], money, weight, quantity, splitArg[6], splitArg[7]);
+					 ParsedInput insertInput = new ParsedInput("insert", "Electronics", splitArg[2], money, quantity, weight, splitArg[6], splitArg[7]);
 					 return insertInput;
 				 }
 				 
