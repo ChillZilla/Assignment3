@@ -1,3 +1,9 @@
+/* WE DIDN'T FORGET THE HEADER :)
+ * Names: Amanda Akin aa44462
+ * 		  Max Archibald mma2629
+ * Lab time : 9:30 - 11:00 am 
+ * Assignment3 Shopping Cart
+ */
 package Assignment3;
 
 import java.io.BufferedReader;
@@ -121,6 +127,7 @@ public class A3Driver
 				  }
 				  i++;
 			  }
+			  JOptionPane.showMessageDialog(frame, dummylist.get(i).name + " " + dummylist.get(i).quantity);
 		  }
 		  else if (parsedInput.command.equalsIgnoreCase("Print")){
 			  
