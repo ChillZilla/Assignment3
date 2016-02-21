@@ -87,12 +87,13 @@ public class A3Driver
 	  
 	  public static ArrayList<Item> createCart(ArrayList<Item> cart, String input)
 	  {
-		  ArrayList<Item> dummylist = new ArrayList<Item>();
-
-		  parseInput(input);
-		  
+		 // ArrayList<Item> dummylist = new ArrayList<Item>();
 
 		  ParsedInput parsedInput = parseInput(input);
+		  if(parsedInput.command == "") //there is not a valid input given, so we couldnt parse it
+		  {
+			  return cart;
+		  }
 		  JFrame frame = new JFrame("Shopping Center");
 		  
 		  // Adds a specified item to the shopping cart
@@ -112,7 +113,7 @@ public class A3Driver
 				  Clothing itemType = new Clothing();
 				  addItem = itemType;
 			  }
-			  else {return dummylist;}
+			  else {return cart;}
 			  
 			  addItem.name = parsedInput.name;
 			  addItem.price = parsedInput.price;
@@ -123,15 +124,15 @@ public class A3Driver
 			  
 			  addItem.price = addItem.calculatePrice();
 			  
-			  dummylist.add(addItem);
-			  return dummylist;
+			  cart.add(addItem);
+			  return cart;
 		  }
 		  
 		  // Notifies user of the total number of a specified item that was ordered
 		  else if (parsedInput.command.equalsIgnoreCase("Search")){
 			  int itemFound = 0;
-			  for (int i = 0; i < dummylist.size(); i++){
-				  if (dummylist.get(i).name.equalsIgnoreCase(parsedInput.name)){
+			  for (int i = 0; i < cart.size(); i++){
+				  if (cart.get(i).name.equalsIgnoreCase(parsedInput.name)){
 					  itemFound++;
 				  }
 			  }
@@ -140,9 +141,9 @@ public class A3Driver
 		  
 		  // Deletes all orders of a specified item that was ordered
 		  else if (parsedInput.command.equalsIgnoreCase("Delete")){
-			  for (int i = 0; i < dummylist.size(); i++) {
-				  if (dummylist.get(i).name.equalsIgnoreCase(parsedInput.name)){
-					  dummylist.remove(i);
+			  for (int i = 0; i < cart.size(); i++) {
+				  if (cart.get(i).name.equalsIgnoreCase(parsedInput.name)){
+					  cart.remove(i);
 				  }
 			  }
 		  }
@@ -151,24 +152,24 @@ public class A3Driver
 		  else if (parsedInput.command.equalsIgnoreCase("Update")){
 			  int itemFound = 0;
 			  int i = 0;
-			  while(i < dummylist.size() && itemFound == 0){
-				  if (dummylist.get(i).name.equalsIgnoreCase(parsedInput.name)){
-					  dummylist.get(i).quantity = parsedInput.quantity;
+			  while(i < cart.size() && itemFound == 0){
+				  if (cart.get(i).name.equalsIgnoreCase(parsedInput.name)){
+					  cart.get(i).quantity = parsedInput.quantity;
 					  itemFound = 1;
 				  }
 				  i++;
 			  }
-			  JOptionPane.showMessageDialog(frame, dummylist.get(i).name + " " + dummylist.get(i).quantity);
+			  JOptionPane.showMessageDialog(frame, cart.get(i).name + " " + cart.get(i).quantity);
 		  }
 		  
 		  // Prints out the attributes of all the items in the cart
 		  else if (parsedInput.command.equalsIgnoreCase("Print")){
-			 for (int i = 0; i < dummylist.size(); i++) {
-				 dummylist.get(i).printItemAttributes();
+			 for (int i = 0; i < cart.size(); i++) {
+				 cart.get(i).printItemAttributes();
 			 }
 		  }
 		  
-		  return dummylist;
+		  return cart;
 	  }
 	  
 	  public static ParsedInput parseInput(String arg)
