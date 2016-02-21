@@ -90,27 +90,35 @@ public class A3Driver
 		  JFrame frame = new JFrame("Shopping Center");
 		  
 		  // Adds a specified item to the shopping cart
+		  // Attempts to typecast superclass to subclass
 		  if (parsedInput.command.equalsIgnoreCase("Insert")){
-			  Item additem;
+			  Item addItem = new Item();
+			  
 			  if (parsedInput.category.equalsIgnoreCase("Groceries")){
-				  Grocery additem = null;
+				  Grocery itemType = new Grocery();
+				  addItem = itemType;
 			  }
 			  else if(parsedInput.category.equalsIgnoreCase("Electronics")){
-				  Electronics additem = null;
+				  Electronics itemType = new Electronics();
+				  addItem = itemType;
 			  }
 			  else if(parsedInput.category.equalsIgnoreCase("Clothing")){
-				  Clothing additem = null;
+				  Clothing itemType = new Clothing();
+				  addItem = itemType;
 			  }
+			  else {return dummylist;}
 			  
-			  additem.name = parsedInput.name;
-			  additem.price = parsedInput.price;
-			  additem.quantity = parsedInput.quantity;
-			  additem.weight = parsedInput.weight;
-			  additem.optional1 = parsedInput.optional1;
-			  additem.optional2 = parsedInput.optional2;
+			  addItem.name = parsedInput.name;
+			  addItem.price = parsedInput.price;
+			  addItem.quantity = parsedInput.quantity;
+			  addItem.weight = parsedInput.weight;
+			  addItem.optional1 = parsedInput.optional1;
+			  addItem.optional2 = parsedInput.optional2;
 			  
-			  additem.price = additem.calculatePrice();
+			  addItem.price = addItem.calculatePrice();
 			  
+			  dummylist.add(addItem);
+			  return dummylist;
 		  }
 		  
 		  // Notifies user of the total number of a specified item that was ordered
@@ -190,7 +198,7 @@ public class A3Driver
 				
 				
 				 if(splitArg[6].equalsIgnoreCase("p") || splitArg[6].equalsIgnoreCase("np")){
-					 ParsedInput insertInput = new ParsedInput("insert", "Groceries", splitArg[2], money, quantity, weight, "", "");
+					 ParsedInput insertInput = new ParsedInput("insert", "Groceries", splitArg[2], money, quantity, weight, splitArg[6], "");
 						return insertInput;
 				 }
 				 else {return inputLine;}
