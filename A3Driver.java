@@ -68,10 +68,7 @@ public class A3Driver
 				
 				for (String s = reader.readLine(); s != null; s = reader.readLine()) 
 				{
-					
 					createCart(shoppingCart, s);
-					//String pigLatin = translator.translate(s);
-					//System.out.println(pigLatin);
 				}
 			} 
 			catch (FileNotFoundException e) 
@@ -98,9 +95,39 @@ public class A3Driver
 		  ParsedInput parsedInput = parseInput(input);
 		  JFrame frame = new JFrame("Shopping Center");
 		  
+		  // Adds a specified item to the shopping cart
+		  // Attempts to typecast superclass to subclass
 		  if (parsedInput.command.equalsIgnoreCase("Insert")){
+			  Item addItem = new Item();
 			  
+			  if (parsedInput.category.equalsIgnoreCase("Groceries")){
+				  Grocery itemType = new Grocery();
+				  addItem = itemType;
+			  }
+			  else if(parsedInput.category.equalsIgnoreCase("Electronics")){
+				  Electronics itemType = new Electronics();
+				  addItem = itemType;
+			  }
+			  else if(parsedInput.category.equalsIgnoreCase("Clothing")){
+				  Clothing itemType = new Clothing();
+				  addItem = itemType;
+			  }
+			  else {return dummylist;}
+			  
+			  addItem.name = parsedInput.name;
+			  addItem.price = parsedInput.price;
+			  addItem.quantity = parsedInput.quantity;
+			  addItem.weight = parsedInput.weight;
+			  addItem.optional1 = parsedInput.optional1;
+			  addItem.optional2 = parsedInput.optional2;
+			  
+			  addItem.price = addItem.calculatePrice();
+			  
+			  dummylist.add(addItem);
+			  return dummylist;
 		  }
+		  
+		  // Notifies user of the total number of a specified item that was ordered
 		  else if (parsedInput.command.equalsIgnoreCase("Search")){
 			  int itemFound = 0;
 			  for (int i = 0; i < dummylist.size(); i++){
@@ -110,6 +137,8 @@ public class A3Driver
 			  }
 			  JOptionPane.showMessageDialog(frame, "There are a total of " + itemFound + " " + parsedInput.name + " in your cart.");
 		  }
+		  
+		  // Deletes all orders of a specified item that was ordered
 		  else if (parsedInput.command.equalsIgnoreCase("Delete")){
 			  for (int i = 0; i < dummylist.size(); i++) {
 				  if (dummylist.get(i).name.equalsIgnoreCase(parsedInput.name)){
@@ -117,6 +146,8 @@ public class A3Driver
 				  }
 			  }
 		  }
+		  
+		  // Sets the quantity of the first order of a specified item 
 		  else if (parsedInput.command.equalsIgnoreCase("Update")){
 			  int itemFound = 0;
 			  int i = 0;
@@ -129,10 +160,13 @@ public class A3Driver
 			  }
 			  JOptionPane.showMessageDialog(frame, dummylist.get(i).name + " " + dummylist.get(i).quantity);
 		  }
+		  
+		  // Prints out the attributes of all the items in the cart
 		  else if (parsedInput.command.equalsIgnoreCase("Print")){
-			  
+			 for (int i = 0; i < dummylist.size(); i++) {
+				 dummylist.get(i).printItemAttributes();
+			 }
 		  }
-
 		  
 		  return dummylist;
 	  }
@@ -171,7 +205,7 @@ public class A3Driver
 				
 				
 				 if(splitArg[6].equalsIgnoreCase("p") || splitArg[6].equalsIgnoreCase("np")){
-					 ParsedInput insertInput = new ParsedInput("insert", "Groceries", splitArg[2], money, quantity, weight, splitArg[5], "");
+					 ParsedInput insertInput = new ParsedInput("insert", "Groceries", splitArg[2], money, quantity, weight, splitArg[6], "");
 						return insertInput;
 				 }
 				 else {return inputLine;}
@@ -240,14 +274,14 @@ public class A3Driver
 			 if(inputlength < 2){ //not valid command
 				 return inputLine;
 			 }
-			 ParsedInput inputParse = new ParsedInput("search", "", splitArg[1], 0, 0, 0, "", "");
+			 ParsedInput inputParse = new ParsedInput("search", "", splitArg[1], 0.0, 0, 0.0, "", "");
 			 return inputParse;
 		 }
 		 else if(splitArg[0].equalsIgnoreCase("delete")){
 			 if(inputlength != 2){ //not valid command
 				 return inputLine;
 			 }
-			 ParsedInput inputParse = new ParsedInput("delete", "", splitArg[1], 0, 0, 0, "", "");
+			 ParsedInput inputParse = new ParsedInput("delete", "", splitArg[1], 0.0, 0, 0.0, "", "");
 			 return inputParse;
 		 }
 		 else if(splitArg[0].equalsIgnoreCase("update")){
@@ -255,11 +289,11 @@ public class A3Driver
 				 return inputLine;
 			 }
 			 int quantity = Integer.parseInt(splitArg[2]); //changing the quantity from a string to an integer
-			 ParsedInput inputParse = new ParsedInput("update", "", splitArg[1], 0, quantity, 0, "", "");
+			 ParsedInput inputParse = new ParsedInput("update", "", splitArg[1], 0.0, quantity, 0.0, "", "");
 			 return inputParse;
 		 }
 		 else if(splitArg[0].equalsIgnoreCase("print")){
-			 ParsedInput inputParse = new ParsedInput("print", "", "", 0, 0, 0, "", "");
+			 ParsedInput inputParse = new ParsedInput("print", "", "", 0.0, 0, 0.0, "", "");
 			 return inputParse;
 		 }
 		 else //not a valid command output a message.

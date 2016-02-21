@@ -6,6 +6,15 @@ public class Electronics extends Item
 {
 
 	// Variables, constructors etc. here.
+	Electronics(){
+		name = "";
+		price = 0;
+		quantity = 0;
+		weight = 0;
+		optional1 = "";
+		optional2 = "";
+	}
+	
 	Electronics(String label, double value, int howmuch, double mass, String op1, String op2)
 	{
 		this.name = label;
@@ -27,22 +36,22 @@ public class Electronics extends Item
 		{
 			if(this.optional1.equalsIgnoreCase("f")){
 				//premium shipping
-				double premium = (this.price * premiumship * shipping * this.weight * this.quantity * 100.00)/100.00;
+				double premium = (this.price * this.quantity + premiumship * shipping * this.weight * this.quantity) * 100.00/100.00;
 				return premium;
 			}
 			//no premium shipping
-			double nopremium = (this.price * shipping * this.weight * this.quantity*100.00)/100.00;
+			double nopremium = (this.price * this.quantity + shipping * this.weight * this.quantity) * 100.00/100.00;
 			return nopremium;
 		}
 		double salesTax = 1.10;
 		if(this.optional1.equalsIgnoreCase("f")){
 			//fragile, need premium shipping
-			double fragile = (this.price * premiumship * shipping * this.weight * salesTax * this.quantity * 100.00)/100.00;
+			double fragile = (this.price * this.quantity * salesTax + premiumship * shipping * this.weight * this.quantity) * 100.00/100.00;
 			return fragile;
 		}
 		//otherwise not fragile, no premium shipping, and sales tax applies.
-		double multiply = (this.price * salesTax* 100.00)/100.00;
-		multiply = (multiply * this.weight * shipping * this.quantity* 100.00)/100.00; //calculate shipping
+		double multiply = (this.price * salesTax) * 100.00/100.00;
+		multiply = (this.quantity * multiply + this.weight * shipping * this.quantity) * 100.00/100.00; //calculate shipping
 		
 		return (multiply); //return the sales tax with the shipping
 	}
