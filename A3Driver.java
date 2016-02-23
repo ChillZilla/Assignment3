@@ -169,6 +169,10 @@ public class A3Driver
 		  
 		  // Prints out the attributes of all the items in the cart
 		  else if (parsedInput.command.equalsIgnoreCase("Print")){
+			  if(cart.size() == 0)
+			  {
+				  JOptionPane.showMessageDialog(frame, "There are no objects in your cart");
+			  }
 			 for (int i = 0; i < cart.size(); i++) {
 				 cart.get(i).printItemAttributes();
 			 }
