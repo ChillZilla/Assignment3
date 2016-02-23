@@ -124,7 +124,7 @@ public class A3Driver
 			  
 			  addItem.price = addItem.calculatePrice();
 			  
-			  cart.add(addItem);
+			  sortInsert(addItem, cart);
 			  return cart;
 		  }
 		  
@@ -309,6 +309,7 @@ public class A3Driver
  */
 	public static double stringtoDec(String money) {
 		String[] moneySplit = money.split("\\.");
+		
 		if (moneySplit.length == 1) {
 			if (moneySplit[0].matches("(\\d+\\d)")||moneySplit[0].matches("\\d")) {
 				double totalMoney = Integer.parseInt(moneySplit[0]);
@@ -319,10 +320,13 @@ public class A3Driver
 		else if(moneySplit.length == 2)
 		{
 			if (moneySplit[0].matches("(\\d+\\d)") || moneySplit[0].matches("\\d")){
-				if(moneySplit[1].matches("(\\d+\\d)"))
+				if(moneySplit[1].matches("(\\d+\\d)") || moneySplit[1].matches("\\d"))
 				{
 					double firstdec = Integer.parseInt(moneySplit[0]);
 					double secdec = Integer.parseInt(moneySplit[1]);
+					if(secdec < 10){
+						secdec = secdec * 10;
+					}
 					double total = firstdec + secdec/100;
 					return total;
 				}
@@ -346,4 +350,21 @@ public class A3Driver
 		return true;
 	}
 	
-}
+
+	public static void sortInsert(Item addItem, ArrayList<Item> shoppingCart)
+	{
+		for(int i = 0; i < shoppingCart.size(); i ++ )
+		{
+			int compareName = addItem.name.compareToIgnoreCase(shoppingCart.get(i).name);
+			if(compareName < 0)
+			{
+				shoppingCart.add(i, addItem);
+				return;
+			}
+			
+		}
+		//out of loop, array list must be empty, add item and scram
+		shoppingCart.add(addItem);
+		return;
+	}
+	}
