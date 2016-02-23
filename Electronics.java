@@ -62,7 +62,7 @@ public class Electronics extends Item
 	{
 		//Print all applicable attributes of this sub-class
 		JFrame frame = new JFrame("Shopping Cart");
-		JOptionPane.showMessageDialog(frame,  this.name + " attributes",  "Name: " + this.name + "Price: "+this.price + "Quantity: "
-		+ this.quantity + "Weight: "+ this.weight + "Fragile? " + this.optional1 + "State: " + this.optional2,  JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(frame, "Name: " + this.name + " Price: "+this.price + " Quantity: "
+		+ this.quantity + " Weight: "+ this.weight + " Fragile? " + this.optional1 + " State: " + this.optional2, this.name + " attributes",  JOptionPane.INFORMATION_MESSAGE);
 	}
 }

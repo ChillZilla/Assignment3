@@ -159,6 +159,11 @@ public class A3Driver
 				  }
 				  i++;
 			  }
+			  if(itemFound == 0 )
+			  {
+				  JOptionPane.showMessageDialog(frame,  "Invalid name, please try again");
+				  return cart;
+			  }
 			  JOptionPane.showMessageDialog(frame, cart.get(i).name + " " + cart.get(i).quantity);
 		  }
 		  
@@ -237,7 +242,8 @@ public class A3Driver
 				 
 			 }
 			 else if(splitArg[1].equalsIgnoreCase("Electronics"))
-			 {	
+			 {	String states = "AL AK AZ AR CA CO CT DE FL GA HI ID IL IN IA KS KY LA MD MA MI MN"
+			 		+ " MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY";
 				 if(inputlength < 8)
 				 {
 					 return inputLine;
@@ -259,8 +265,12 @@ public class A3Driver
 				 int quantity = Integer.parseInt(splitArg[4]);
 			
 				 if(splitArg[6].equalsIgnoreCase("f") || splitArg[6].equalsIgnoreCase("nf")){
+					 if(states.contains(splitArg[7])){
+						 
 					 ParsedInput insertInput = new ParsedInput("insert", "Electronics", splitArg[2], money, quantity, weight, splitArg[6], splitArg[7]);
 					 return insertInput;
+					 
+					 }
 				 }
 				 
 			 }

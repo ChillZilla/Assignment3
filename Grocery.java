@@ -39,7 +39,7 @@ public class Grocery extends Item {
 	{
 		//Print all applicable attributes of this sub-class
 		JFrame frame = new JFrame("Shopping Cart");
-		JOptionPane.showMessageDialog(frame, this.name + " attributes", "Name: " + this.name + "Price: "+this.price + "Quantity: "
-		+ this.quantity + "Weight: "+ this.weight + "Perishable? " + this.optional1, JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(frame, "Name: " + this.name + " Price: "+this.price + " Quantity: "
+		+ this.quantity + " Weight: "+ this.weight + " Perishable? " + this.optional1, this.name + " attributes", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
