@@ -37,9 +37,7 @@ public class A3Driver
 			processLinesInFile (args[0]);
 		  
 		  
-		  
-		  
-		  
+		  		  
 		// ArrayList<Item> shoppingCart = new ArrayList<Item>(); 
 			//Used in process Lines In file
 		
@@ -147,7 +145,7 @@ public class A3Driver
 				  if (cart.get(i).getName().equals(parsedInput.name)){
 					  removed += cart.get(i).getQuantity(); //adding the amount we removed for each item
 					  cart.remove(i);
-					  i--;
+					 i--;
 				  }
 			  }
 			  if (removed == 0){

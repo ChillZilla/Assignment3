@@ -1,3 +1,9 @@
+/* WE DIDN'T FORGET THE HEADER :)
+ * Names: Amanda Akin aa44462
+ * 		  Max Archibald mma2629
+ * Lab time : 9:30 - 11:00 am 
+ * Assignment3 Shopping Cart
+ */
 package Assignment3;
 import javax.swing.JOptionPane;
 import javax.swing.JFrame;
