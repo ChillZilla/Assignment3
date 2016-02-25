@@ -149,7 +149,7 @@ public class A3Driver
 					  cart.remove(i);
 				  }
 			  }
-			  JOptionPane.showMessageDialog(frame, "Deleted " + parsedInput.name + " " + removed);
+			  JOptionPane.showMessageDialog(frame, "Deleted " + parsedInput.name + " of the quantity " + removed);
 		  }
 		  
 		  // Sets the quantity of the first order of a specified item 
@@ -168,7 +168,7 @@ public class A3Driver
 				  JOptionPane.showMessageDialog(frame,  "Invalid name, please try again");
 				  return cart;
 			  }
-			  JOptionPane.showMessageDialog(frame, cart.get(i).getName() + " " + cart.get(i).getQuantity());
+			  JOptionPane.showMessageDialog(frame, "Updated " + cart.get(i).getName() + " to the quantity " + cart.get(i).getQuantity());
 		  }
 		  
 		  // Prints out the attributes of all the items in the cart
@@ -182,7 +182,7 @@ public class A3Driver
 				 cart.get(i).printItemAttributes();
 				 total += cart.get(i).getPrice();	//add the price of each item to the total
 			 }
-			 JOptionPane.showMessageDialog(frame,"Total Charge: " + total); //print the total of the whole cart
+			 JOptionPane.showMessageDialog(frame,"Total Charge: $" + total); //print the total of the whole cart
 		  }
 		  
 		  return cart;
