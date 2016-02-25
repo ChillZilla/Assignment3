@@ -54,6 +54,7 @@ public class A3Driver
 			//based on the inherited class type, as to which method is to be invoked. Eg: If it is an instance
 			// of Grocery, it will invoke the calculatePrice () method defined in Grocery.
 		//}		
+			return;
 	  }
 	 
 	  
@@ -115,14 +116,14 @@ public class A3Driver
 			  }
 			  else {return cart;}
 			  
-			  addItem.name = parsedInput.name;
-			  addItem.price = parsedInput.price;
-			  addItem.quantity = parsedInput.quantity;
-			  addItem.weight = parsedInput.weight;
-			  addItem.optional1 = parsedInput.optional1;
-			  addItem.optional2 = parsedInput.optional2;
+			  addItem.setName(parsedInput.name);
+			  addItem.setPrice(parsedInput.price);
+			  addItem.setQuantity(parsedInput.quantity);
+			  addItem.setWeight(parsedInput.weight);
+			  addItem.setOptional1(parsedInput.optional1);
+			  addItem.setOptional2(parsedInput.optional2);
 			  
-			  addItem.price = addItem.calculatePrice();
+			  addItem.setPrice(addItem.calculatePrice());
 			  
 			  sortInsert(addItem, cart);
 			  return cart;
@@ -132,20 +133,23 @@ public class A3Driver
 		  else if (parsedInput.command.equalsIgnoreCase("Search")){
 			  int itemFound = 0;
 			  for (int i = 0; i < cart.size(); i++){
-				  if (cart.get(i).name.equalsIgnoreCase(parsedInput.name)){
-					  itemFound++;
+				  if (cart.get(i).getName().equals(parsedInput.name)){
+					  itemFound += cart.get(i).getQuantity(); //add the quantity of each matched item to the itemFound number
 				  }
 			  }
-			  JOptionPane.showMessageDialog(frame, "There are a total of " + itemFound + " " + parsedInput.name + " in your cart.");
+			  JOptionPane.showMessageDialog(frame, "Searched " + parsedInput.name + " " + itemFound ); //just output name and itemFound amount
 		  }
 		  
 		  // Deletes all orders of a specified item that was ordered
 		  else if (parsedInput.command.equalsIgnoreCase("Delete")){
+			  int removed = 0;
 			  for (int i = 0; i < cart.size(); i++) {
-				  if (cart.get(i).name.equalsIgnoreCase(parsedInput.name)){
+				  if (cart.get(i).getName().equals(parsedInput.name)){
+					  removed += cart.get(i).getQuantity(); //adding the amount we removed for each item
 					  cart.remove(i);
 				  }
 			  }
+			  JOptionPane.showMessageDialog(frame, "Deleted " + parsedInput.name + " " + removed);
 		  }
 		  
 		  // Sets the quantity of the first order of a specified item 
@@ -153,8 +157,8 @@ public class A3Driver
 			  int itemFound = 0;
 			  int i = 0;
 			  while(i < cart.size() && itemFound == 0){
-				  if (cart.get(i).name.equalsIgnoreCase(parsedInput.name)){
-					  cart.get(i).quantity = parsedInput.quantity;
+				  if (cart.get(i).getName().equals(parsedInput.name)){
+					  cart.get(i).setQuantity(parsedInput.quantity); //sets the new quantity to the input quantity
 					  itemFound = 1;
 				  }
 				  i++;
@@ -164,18 +168,21 @@ public class A3Driver
 				  JOptionPane.showMessageDialog(frame,  "Invalid name, please try again");
 				  return cart;
 			  }
-			  JOptionPane.showMessageDialog(frame, cart.get(i).name + " " + cart.get(i).quantity);
+			  JOptionPane.showMessageDialog(frame, cart.get(i).getName() + " " + cart.get(i).getQuantity());
 		  }
 		  
 		  // Prints out the attributes of all the items in the cart
 		  else if (parsedInput.command.equalsIgnoreCase("Print")){
 			  if(cart.size() == 0)
 			  {
-				  JOptionPane.showMessageDialog(frame, "There are no objects in your cart");
+				  JOptionPane.showMessageDialog(frame, "No Objects. Total Charge = $0.00");
 			  }
+			  double total = 0;
 			 for (int i = 0; i < cart.size(); i++) {
 				 cart.get(i).printItemAttributes();
+				 total += cart.get(i).getPrice();	//add the price of each item to the total
 			 }
+			 JOptionPane.showMessageDialog(frame,"Total Charge: " + total); //print the total of the whole cart
 		  }
 		  
 		  return cart;
@@ -184,13 +191,14 @@ public class A3Driver
 	  public static ParsedInput parseInput(String arg)
 	  {
 		  ParsedInput inputLine = new ParsedInput();
-		  //String[] commands = {"insert", "search", "delete", "update", "print"};
+		  JFrame frame = new JFrame("Shopping Cart");
 		  String[] splitArg = arg.split("\\s+"); //takes in the input and splits it by spaces
 		  int inputlength = splitArg.length;
 		 if(splitArg[0].equalsIgnoreCase("insert"))
 		 {//if it is insert command, can have up to six arguments.
 			 if(inputlength < 6) //not a valid insert input
 			 {
+				 JOptionPane.showMessageDialog(frame,"Invalid Insert parameters");
 				 return inputLine;
 			 }
 			//need to check if the category is valid
@@ -200,25 +208,33 @@ public class A3Driver
 				 double money = stringtoDec(splitArg[3]);
 				 if(money == -1)
 				 {
+					 JOptionPane.showMessageDialog(frame,"Invalid price");
 					 return inputLine;
 				 } //check the price is right
-				 double weight = stringtoDec(splitArg[5]);
+				int weight = parseNum(splitArg[5]); //parse the weight string to see if it is a whole number
 				 if(weight == -1){
+					 JOptionPane.showMessageDialog(frame,"Invalid weight");
 					 return inputLine;
 				 }
 				 if(!isValidNumber(splitArg[4])){
+					 JOptionPane.showMessageDialog(frame,"Invalid Quantity");
 					 return inputLine;
 				 }
 				
-				 int quantity = Integer.parseInt(splitArg[4]);
-				 
-				
-				
+				 int quantity = parseNum(splitArg[4]);
+				 if(quantity < 0){
+					 JOptionPane.showMessageDialog(frame,"Invalid Quantity"); //overflow detected
+					 return inputLine;
+				 }
+				 				
 				 if(splitArg[6].equalsIgnoreCase("p") || splitArg[6].equalsIgnoreCase("np")){
 					 ParsedInput insertInput = new ParsedInput("insert", "Groceries", splitArg[2], money, quantity, weight, splitArg[6], "");
 						return insertInput;
 				 }
-				 else {return inputLine;}
+				 else {
+					 JOptionPane.showMessageDialog(frame,"Invalid Input");
+					 return inputLine;
+					 }
 				
 				 
 			 }
@@ -228,19 +244,27 @@ public class A3Driver
 				 double money = stringtoDec(splitArg[3]);
 				 if(money == -1)
 				 {
+					 JOptionPane.showMessageDialog(frame,"Invalid price");
 					 return inputLine;
 				 } //check the price is right
-				 double weight = stringtoDec(splitArg[5]);
+				 int weight = parseNum(splitArg[5]);
 				 if(weight == -1){
+					 JOptionPane.showMessageDialog(frame,"Invalid weight");
 					 return inputLine;
 				 }
 				  
 				 if(!isValidNumber(splitArg[4])){
+					 JOptionPane.showMessageDialog(frame,"Invalid Quantity");
 					 return inputLine;
 				 }
-				 int quantity = Integer.parseInt(splitArg[4]);
 				 
-				
+				 int quantity = parseNum(splitArg[4]);
+				 if(quantity < 0) //check for integer overflow
+				 {
+					 JOptionPane.showMessageDialog(frame,"Invalid Quantity");
+					 return inputLine;
+				 }
+				 
 				 ParsedInput insertInput = new ParsedInput("insert", "Clothing", splitArg[2], money, quantity, weight, "", "");
 				 return insertInput;
 				 
@@ -250,23 +274,32 @@ public class A3Driver
 			 		+ " MS MO MT NE NV NH NJ NM NY NC ND OH OK OR PA RI SC SD TN TX UT VT VA WA WV WI WY";
 				 if(inputlength < 8)
 				 {
+					 JOptionPane.showMessageDialog(frame,"Invalid insert for Electronics");
 					 return inputLine;
 				 }
 				 double money = stringtoDec(splitArg[3]);
 				 if(money == -1)
 				 {
+					 JOptionPane.showMessageDialog(frame,"Invalid price");
 					 return inputLine;
 				 } //check the price is right
-				 double weight = stringtoDec(splitArg[5]);
+				 int weight = parseNum(splitArg[5]);
 
 				 if(weight == -1){
+					 JOptionPane.showMessageDialog(frame,"Invalid weight");
 					 return inputLine;
 				 }
 				 if(!isValidNumber(splitArg[4])) //quantity is a string
 				 {
+					 JOptionPane.showMessageDialog(frame,"Invalid Quantity");
 					 return inputLine;
 				 }
-				 int quantity = Integer.parseInt(splitArg[4]);
+				 int quantity = parseNum(splitArg[4]);
+				 if(quantity < 0) //check for integer overflow
+				 {
+					 JOptionPane.showMessageDialog(frame,"Invalid Quantity");
+					 return inputLine;
+				 }
 			
 				 if(splitArg[6].equalsIgnoreCase("f") || splitArg[6].equalsIgnoreCase("nf")){
 					 if(states.contains(splitArg[7])){
@@ -281,47 +314,60 @@ public class A3Driver
 			 else
 			 {
 				 //INVALID 
+				 JOptionPane.showMessageDialog(frame,"Invalid Insert parameters");
+			
 				 return inputLine;
 			 }			 
 		 }
-		 else if(splitArg[0].equalsIgnoreCase("search"))
+		 else if(splitArg[0].equalsIgnoreCase("search"))//gives a name 
 		 {
-			 if(inputlength < 2){ //not valid command
-				 return inputLine;
-			 }
-			 ParsedInput inputParse = new ParsedInput("search", "", splitArg[1], 0.0, 0, 0.0, "", "");
-			 return inputParse;
-		 }
-		 else if(splitArg[0].equalsIgnoreCase("delete")){
 			 if(inputlength != 2){ //not valid command
+				 JOptionPane.showMessageDialog(frame,"Invalid Search parameters");
 				 return inputLine;
 			 }
-			 ParsedInput inputParse = new ParsedInput("delete", "", splitArg[1], 0.0, 0, 0.0, "", "");
+			 ParsedInput inputParse = new ParsedInput("search", "", splitArg[1], 0.0, 0, 0, "", "");
 			 return inputParse;
 		 }
-		 else if(splitArg[0].equalsIgnoreCase("update")){
-			 if (inputlength != 3){
+		 else if(splitArg[0].equalsIgnoreCase("delete")){//gives a name
+			 if(inputlength != 2){ //not valid command
+				 JOptionPane.showMessageDialog(frame,"Invalid Delete parameters");
 				 return inputLine;
 			 }
-			 int quantity = Integer.parseInt(splitArg[2]); //changing the quantity from a string to an integer
-			 ParsedInput inputParse = new ParsedInput("update", "", splitArg[1], 0.0, quantity, 0.0, "", "");
+			 ParsedInput inputParse = new ParsedInput("delete", "", splitArg[1], 0.0, 0, 0, "", "");
+			 return inputParse;
+		 }
+		 else if(splitArg[0].equalsIgnoreCase("update")){//gives a name and a number
+			 if (inputlength != 3){
+				 JOptionPane.showMessageDialog(frame,"Invalid Update parameters");
+				 return inputLine;
+			 }
+			 int quantity = parseNum(splitArg[2]); //changing the quantity from a string to an integer
+			 if(quantity < 0)
+			 {
+				 JOptionPane.showMessageDialog(frame,"Invalid Quantity");
+				 return inputLine;
+			 }
+			 ParsedInput inputParse = new ParsedInput("update", "", splitArg[1], 0.0, quantity, 0, "", "");
 			 return inputParse;
 		 }
 		 else if(splitArg[0].equalsIgnoreCase("print")){
-			 ParsedInput inputParse = new ParsedInput("print", "", "", 0.0, 0, 0.0, "", "");
+			 ParsedInput inputParse = new ParsedInput("print", "", "", 0.0, 0, 0, "", "");
 			 return inputParse;
 		 }
 		 else //not a valid command output a message.
-		 {
+		 {	
+			 JOptionPane.showMessageDialog(frame,"Invalid Input");
 			 return inputLine;
 		 }
-		
+		 JOptionPane.showMessageDialog(frame,"Invalid Input");
 		 return inputLine;
 	  }
 /*
  * checks if the input given is a valid decimal integer from a string
  */
 	public static double stringtoDec(String money) {
+		if(money.matches("\\d +\\d+\\.") || money.matches("\\d + \\.")){return -1;} //"886." "8." are not valid inputs
+		
 		String[] moneySplit = money.split("\\.");
 		
 		if (moneySplit.length == 1) {
@@ -369,7 +415,8 @@ public class A3Driver
 	{
 		for(int i = 0; i < shoppingCart.size(); i ++ )
 		{
-			int compareName = addItem.name.compareToIgnoreCase(shoppingCart.get(i).name);
+			int compareName = addItem.getName().compareToIgnoreCase(shoppingCart.get(i).getName());
+		
 			if(compareName < 0)
 			{
 				shoppingCart.add(i, addItem);
@@ -380,5 +427,47 @@ public class A3Driver
 		//out of loop, array list must be empty, add item and scram
 		shoppingCart.add(addItem);
 		return;
+	}
+	
+	public static int parseNum(String num)
+	{
+		String[] splitNum = num.split("\\."); //split the weight by decimal (if weight is 3.00)
+		if(splitNum.length == 1)
+		{//valid weight -- integer!
+			if(splitNum[0].matches("\\d+\\d") || splitNum[0].matches("\\d"))
+			{
+				int newNum = Integer.parseInt(splitNum[0]);
+				if(newNum < 0) //overflow detection, if it is an incredibly large number, will be negative
+				{
+					return -1;
+				}
+				return newNum;
+			}
+			else return -1; //not a valid number.
+			
+		}
+		else if(splitNum.length == 2)//has two parts, must be decimal -- 
+		{
+			if(splitNum[0].matches("\\d+\\d") || splitNum[0].matches("\\d")) //check the first decimal
+			{
+				int firstdec = Integer.parseInt(splitNum[0]);
+				if(splitNum[1].matches("\\d+\\d")|| splitNum[1].matches("\\d")) //check second decimal as a number
+				{
+					int secdec = Integer.parseInt(splitNum[1]); //parse the second decimal.
+					if(secdec != 0)
+					{
+						return -1; //not a valid weight
+					}
+					if(firstdec < 0 ){return -1;} //overflow, too big of a number--went negative
+					
+					int finalNum = firstdec + secdec/100;
+					return finalNum;
+					
+				}
+			}
+			return -1;
+		}
+		return -1; //not a valid input
+		
 	}
 	}
