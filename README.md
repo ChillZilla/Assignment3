@@ -1,8 +1,11 @@
 # Assignment3
+
 422C- Java Assignment for Shopping Cart by Maxwell Archibald and Amanda Akin
 
-About our program: 
+About our program:
+
 Assumptions: 
+
 1) All valid inputs follow the basic structure: Command category name price quantity weight op1 op2
 
 2) Assuming there can be invalid input in all fields above, or completely wrong inputs altogether
