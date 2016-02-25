@@ -147,7 +147,12 @@ public class A3Driver
 				  if (cart.get(i).getName().equals(parsedInput.name)){
 					  removed += cart.get(i).getQuantity(); //adding the amount we removed for each item
 					  cart.remove(i);
+					  i--;
 				  }
+			  }
+			  if (removed == 0){
+				  JOptionPane.showMessageDialog(frame, "The item " + parsedInput.name + " was not available for deletion");
+				  return cart;
 			  }
 			  JOptionPane.showMessageDialog(frame, "Deleted " + parsedInput.name + " of the quantity " + removed);
 		  }
@@ -161,7 +166,7 @@ public class A3Driver
 					  cart.get(i).setQuantity(parsedInput.quantity); //sets the new quantity to the input quantity
 					  itemFound = 1;
 				  }
-				  i++;
+				  else {i++;}
 			  }
 			  if(itemFound == 0 )
 			  {
